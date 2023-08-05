@@ -1,0 +1,29 @@
+---
+title: "Usage-based Cost Insights"
+---
+
+### Understand Usage-based Cost
+
+Paigo calculates cost breakdown including fixed costs and variable costs. Variable costs are calculated based on designated infrastructure resources usage. For example, if a SaaS business provisions Kubernetes pods for each customer separately, and uses a shared load balancer for all customers, then Paigo identifies Kubernetes as variable costs, and load balancer usage as fixed costs. SaaS customers can select different variable cost categories such as compute, storage, archive or network. The explanation of each cost insight item is listed below.
+
+| Item          | Explanation                                                                                                                                                                                          | Source of Data                                      |
+| ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------- |
+| Total Cost    | Total Cloud Bill                                                                                                                                                                                     | Cloud Billing Data                                  |
+| Variable Cost | Costs that increase as every new customer is onboarded. Also known as marginal costs. Typical examples of variable costs are compute, storage, network, archive depending on the nature of business. | Paigo Calculated Variable Costs, Cloud Billing Data |
+| Fixed Cost    | Costs that do not increase as every new customer is onboarded. Also known as shared overhead. Typical examples of fixed costs are load balancer, shared storage, monitoring infrastructure, etc.     | Total Cost - Variable Cost                          |
+
+Note that the variable cost calculated by Paigo typically is not the same as the AWS bill on some particular resources, as those information is readily available from AWS. The costs calculated by Paigo represents a more precise view of cost attribution tied to revenue stream. Therefore, it's usage-based cost.
+
+For example, SaaS business may provision Kubernetes pods for each new customer onboarded. So AWS Elastic Kubernetes Services (EKS) can be selected as a variable cost category in Paigo. While AWS bill contains the total dollar amount of using EKS, Paigo calculates the cost of serving customers by the following sample algorithm:
+
+1. 1.  
+Frequently sample the usage Kubernetes, such as in seconds.
+
+2. 2.  
+Filter out non-customer usage, such as monitoring pods.
+
+3. 3.  
+Calculate precise atomic cost at more granular level, such as by multiple of $0.00000001 and by minutes.
+
+4. 4.  
+Aggregate the collective costs.

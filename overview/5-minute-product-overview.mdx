@@ -1,0 +1,88 @@
+---
+title: "5 Minute Product Overview"
+---
+
+This document provides a high-level overview of Paigo platform's functionalities and how we achieved them. The table below demonstrates the critical components of usage-based business operations, which are also the functionality areas of Paigo platform.
+
+| Step                                                                                             | Example                                                                                                                                                |
+| ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| 1. **Define pricing plans** _(Manage pricing plans, SKUs and sales deals)_                        | Definepay-as-you-go price as **$0.01** per **1K** **millisecond** GPU with free trial, and **15%** annual payment discount                             |
+| 2. **Measure customer usage** _(Calculate the precise usage amount in the smallest unit time)_    | Measure customer **A** used **2,457** **millisecond** **GPU** at **2023-01-01T13:47:00Z**                                                              |
+| 3. **Collect usage data** _(Delivery the measured data to a billing system)_                      | **Send** data 2,457 to a billing system in **real-time reliably**                                                                                      |
+| 4. **Persist usage data** _(Transform, shard, sort, and index usage data in database)_            | **Deduplicate**, transform 2,457 millisecond into **time-series append-only usage journal** and save in the right database **shard**                   |
+| 5. **Aggregate usage data** _(Aggregate, filter, and group-by usage data by batch process)_       | Aggregate into **hourly**, **daily**, and **monthly** usage, then group by **SKU**, **customer**, and other **dimensions**                             |
+| 6. **Invoice and Payment** _(Create bills, issue invoices, request and collect payment)_          | At the end of **Jan 2023**, calculate **total bills** of customer A, create **tax-compliant invoices**, and collect **Stripe Payment** from customer A |
+| 7. **Business Analytics** _(Calculate and report revenue recognition, growth & retention)_        | Calculate **MRR, ARR, growth and retention** of this product for **Q4 2022**, and generate **visualized reports** for executives                       |
+| 8. **Optimize pricing strategy** _(Benchmark product cost, test and optimize pricing strategies)_ | Identify the **unit cost** of 1K millisecond is **$0.0087**, and the sales price with customer A has a **14.94% contribution profit margin**           |
+
+### Usage-based Pricing
+
+Paigo provides a powerful pricing engine with great flexibility. SaaS business of any scale can manage winning business pricing strategies easily in Paigo. Below are some examples of the pricing strategies Paigo can support:
+
+* Various pricing structure: pay-as-you-go, subscription tier, flat rate, or hybrid.
+
+* Pricing add-on: usage entitlement, overage charge, free trial, discount
+
+* B2B sales deal: private contract, commitment, prepaid credit
+
+Pricing plans are often called SKUs, product lines, offerings, or packages. Paigo's pricing module empowers SaaS business to create and mange as many pricing plans as needed in no-code way. The pricing strategy can be defined, analyzed and improved in Paigo dashboard efficiently.
+
+Navigate to [Pricing Plan and Sale Deals](/pricing-and-subscription/pricing-plan-and-sale-deals) chapter for full documentation.
+
+### Usage-based Billing
+
+Paigo provides billing infrastructure for usage-based business mode. The billing infrastructure achieves 100% billing automation through the following steps:
+
+Usage Measurementand CollectionBillingAggregationInvoicingand TaxCloud Marketplace ReportingPaymentProcessing
+
+* **Measure customer usage** Paigo's unique usage measurement engine deeply integrates with SaaS application architecture to calculate precise usage in real-time. The usage measurement engine supports infrastructure-based, agent-based, datastore-based, SQL-based and API-based usage measurement. See [Measure and Collect Usage Data at Scale](/measure-usage-and-collect-data/measure-and-collect-usage-data-at-scale) chapter for more information.
+
+* **Collect usage data** Delivery the measurement the usage data to backend billing system with client-side transformation, high-availability and reliability. Usage data collection in Paigo is also done by usage measurement engine.
+
+* **Persist billing data** Once the usage data is delivered at the backend, Paigo applies algorithms to process data to ensure it's uniqueness, and persist the data point in database as time-series append-only usage journal with proper indexing for billing and analytics use cases.
+
+* **Aggregate usage** Run batch processes to aggregate raw data layer into different aggregated layer, such as hourly sum, daily maximum, or monthly average. Also group data by common use cases such as product lines, customers, or pricing plans.
+
+* **Invoice and payment** At the end of billing cycle, scheduled processes run to calculate all the service usage by each customer and the total amount owed. Tax-compliant invoice is generated for review. Payment requests are issued upon the approval of the invoice. Paigo also takes care of failed payment and revenue recovery. See [Process Payment with Stripe](/invoice-and-process-payment/process-payment-with-stripe) chapter for more information.
+
+Every step in sequence is fully automated by Paigo without engineering effort or internal system by SaaS business. To learn more about the end-end experience of using Paigo Billing, read the below documents.
+
+### Usage-based Cost
+
+Since usage-based model heavily rely on unit economy, cost benchmark becomes extremely important for SaaS business. Paigo platform provides the following usage-based cost insights out-of-box:
+
+* Total cost
+
+* Variable cost as designated by usage dimensions
+
+* Fixed cost
+
+* Cost breakdown
+
+* Unit cost
+
+Navigate to [Product Unit Cost](/business-analytics/product-unit-cost) chapter for full documentation.
+
+### Usage-based Analytics
+
+Business leaders care about the impact on business traction of usage-based model. Paigo leverages massive data sets to derive critical business metrics, as listed below.
+
+* Monthly Recurring Revenue (MRR)
+
+* Annual Recurring Revenue (ARR)
+
+* Monthly over month growth rate
+
+* Year over year growth rate
+
+* Revenue projection
+
+* Gross margin analytics
+
+* Contribution margin analytics
+
+### Usage-based Cloud Integration
+
+For Cloud Marketplaces (AWS, Azure and GCP), SaaS product offering requires SaaS customer usage report continuously and precisely on a fixed schedule in order to invoice SaaS customer correctly. Paigo has the cloud marketplace integration fully automated so that SaaS business just needs to enable it with one click. Paigo platform automatically measures SaaS customer usage, collects into database for persistence, and aggregates according to the policy of marketplace, report usage to marketplace API by a scheduler, and finally consolidates revenue data from marketplaces.
+
+Navigate to [Cloud Marketplace Invoicing](/invoice-and-process-payment/cloud-marketplace-invoicing) chapter for full documentation.

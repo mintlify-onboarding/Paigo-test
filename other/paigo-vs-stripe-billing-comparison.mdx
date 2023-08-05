@@ -1,0 +1,75 @@
+---
+title: "Paigo vs Stripe Billing Comparison"
+---
+
+Stripe has a feature called [Stripe billing](https://stripe.com/billing) that offers subscription and invoice management. This page talks about a high-level differentiation by comparing Paigo and Stripe Billing. Stripe billing is offered by Stripe as a feature in their payment ecosystem. It has very limited coverage of SaaS billing functionalities. See below for more information.
+
+#### Only One Usage Dimension
+
+To begin with, Stripe Billing is extremely limited because it only supports one usage dimension per product. See [Stripe Billing documentation](https://stripe.com/docs/billing/subscriptions/usage-based) for more information. This limitation won't be able to meet the business requirements of most SaaS businesses in the world. For example, a SaaS business may want to bill customers based on the length of VM running time, as well as the size of Data Storage. Stripe Billing doesn't support common billing structures like this.
+
+Paigo natively supports unlimited product dimensions on a product. So a product can be defined with many usage dimensions, and all of them will be calculated precisely for billing purpose.
+
+**API Rate Limit**
+
+According to [their documentation](https://stripe.com/docs/rate-limits), Stripe Billing's API supports up to 100 read/write per second. This is extremely low throughput, and definitely **not** designed for usage-based business model. For usage based business, there could be easily thousands if not more billing events to be written to the backend system per second (such as 5,000 emails sent by all clients in a email delivery SaaS). Therefore, Stripe API cannot be the backbone for a modern usage-based business.
+
+Paigo natively supports up to 100,000 transactions per second. Any usage billing events can be ingested into Paigo without limitations.
+
+**Prepaid Credit in B2B Sales Deals**
+
+In B2B sales deals, many customers prefer to make upfront payment for a year and retire those as credits. Stripe does not support prepaid credit in enterprise deal. It would require a SaaS business to build an internal system to store the prepayment and keep track of the credit usage precisely as they are consumed in real-time to provide customers accurate view for their credit balance.
+
+Prepaid credit system is offered in Paigo as a built-in feature out-of-box.
+
+#### Usage Entitlement
+
+Usage entitlement means for a product offering, customers are entitled to use the product up to a limit (such as up to 1M API requests per month). This is a must feature in usage-based business model. Stripe doesn't keep track of usage in terms of entitlement. Stripe requires SaaS business to build an internal system that sets the limit, keeps track of the usage progress as they happen in real-time and take actions when the limit is reached.
+
+Paigo automatically keeps track of the usage with regard to entitlement and can notify SaaS by multiple ways such as web hooks or email.
+
+#### Usage Measurement and Collection
+
+Stripe requires SaaS business to develop an internal system to collect customer usage, and continuously deliver the usage data to Stripe with out any disruption. This requirement also means the internal system must be responsible for the infrastructure for the scheduling of sending usage data, retry logic, high availability of delivery, etc. Any failure in these cases will cause the bill to be incorrect.
+
+Paigo automatically measures and collects SaaS customers' usage without the need of any internal system or engineering effort.
+
+#### Consolidated Revenue Recognition
+
+For many SaaS business, revenue comes from not only Stripe but also other channels such as Cloud Marketplaces on AWS, Azure or GCP. Stripe only has data for their transactions.Paigo has all the revenue data from Stripe, all other payment gateways and Cloud Marketplaces. Everything is in the same unified Paigo dashboard.
+
+Paigo not only provides the single pane of glass for all revenue operations, but also calculates more accurate revenue recognition analytics such as MRR or ARR.
+
+#### Hybrid Deal Structure
+
+Stripe Billing is extremely limited for enterprise B2B deal structures. Imagine a B2B deal structure has an annual fee with monthly usage metered (an example would be $10,000 commitment in an annual contract which includes 10M emails sent per month, and overage emails sent in the same month costs $0.01/email), Stripe doesn't support this deal structure because a product can only have one billing period (annual or monthly) not both.
+
+Paigo is powerful and flexible to support various deal structure, billing internal or hybrid model.
+
+#### Discounts
+
+Stripe doesn't support discount on SKU or on annually paid subscription. They only support discount by Coupon of each individual user, or negative invoice, or creating another product listing that has a cheaper price. (See Stripe Billing Doc [here](https://stripe.com/docs/billing/subscriptions/coupons#alternative)). So in enterprise B2B deals, when discounts are used, in Stripe users have to create a new product and calculate the discount for every single billing item.
+
+Paigo supports various kinds of discount model out-of-box.
+
+#### Revenue Recovery
+
+There are miscellaneous scenarios with regard to process payments for billing. Such as expired credit card on profile, insufficient fund in bank account, returned payment due to dispute, etc. The potential settlement of these scenarios depending on the deal structure or business agreement, they require proper handling from business logic layer. Stripe doesn't handle these real-world billing cases Stripe focus on banking transaction processing.
+
+Paigo handles various payment processing scenarios in fully automated way or with manual approval.
+
+****
+
+The table below summarizes these key differences.
+
+| Feature                          | Paigo            | Stripe        |
+| -------------------------------- | ---------------- | ------------- |
+| Usage Dimension                  | One              | Unlimited     |
+| Prepaid Credit                   | Supported        | None          |
+| API Rate Limit                   | 100,000 RPS      | 100 RPS       |
+| Usage Entitlement                | Supported        | None          |
+| Usage Collection                 | Automatic        | None          |
+| Consolidated Revenue Recognition | Multiple sources | Single source |
+| Hybrid Deal Structure            | Supported        | None          |
+| Discounts                        | Flexible         | Limited       |
+| Revenue Recovery                 | Supported        | None          |

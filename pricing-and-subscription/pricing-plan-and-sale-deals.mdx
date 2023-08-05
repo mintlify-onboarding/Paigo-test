@@ -1,0 +1,79 @@
+---
+title: "Pricing Plan and Sale Deals"
+---
+
+### Overview
+
+Offering represents pricing plans, packages, or SKUs that customers can enroll in and be billed on. Examples of offering are free trial plan, startup plan, enterprise plan, etc. Offering defines how bills will be calculated such as fixed amount or variable amount, the schedule of payments such as beginning of billing cycle or end of billing cycle, and adjustments to payment such as free trial period or free credits. All businesses are different, so are their pricing strategies. Offering system in Paigo is built with flexibility so that offerings can be customized and fit various business needs.
+
+### Offering Configuration
+
+An offering can be enrolled by multiple customers or single customer. These properties are configurable for a offering.
+
+* **Offering Name:** Each offering has a name that will be used to display on invoice or show up in payment. The offering nameshould be human-friendly and intuitive (thinking of `Growth Plan` rather than `growth-plan-public` )
+
+* **Offering Type:**  
+   * **Usage-based**: The amount customers are billed depends on the exact customer's usage. The billing occurs after the billing cycle concludes, such as the first day of the next month. When the offering type is `Usage-based`, the **Usage Dimension** property is required to have at least one dimension.  
+   * **Fixed Subscription**: The amount customers are billed is the same for every billing cycle. The billing occurs at the beginning of the billing cycle, such as the first day of current month. When the offering type is `Fixed Subscription`, the **Usage Dimension** property is optional. If there are dimensions attached to offering, then the charges for the usage occurs at the end of the billing cycles as invoices.
+
+* **Subscription Price:** Required for `Fixed Subscription`. The fixed amount to be billed to customers every billing cycle.
+
+* **Free Trial**: Whether to enable free trial on the pricing offering. The configuration of free trials (free trial period, free trial credit, or free trial usage) is determined the other properties.
+
+* **Free Trial Period (Days)**: The number of days for free trial period.
+
+* **Billing Cycle**: The time period for billing to be processed.  
+   * **Calendar Month**: Billing will be processed with billing cycle aligned with calendar month, such as beginning of the month or end of the month.
+
+* **Usage Dimension**: The product metrics tied to the pricing strategy, such as API call, compute capacity, or storage volume. Usage dimension can be one or more metrics combined as a business package. See [Define Product Metrics](/pricing-and-subscription/define-product-metrics) on documentation to define dimensions.
+
+### Model Free Trial
+
+Paigo offers three models of free trial: free trial period, free trial credit, and free trial usage.
+
+Free trial period is defined in terms of days. During the period, all fees and charges are waived for the customers, such as bills based on usage or fixed subscription fees. Invoices are still generated for customers with line items shown, but the amount due during free trial periods is 0\. If the free trial period spans more than one billing cycle, Paigo calculates the prorated amount due after deducting the charges from free trial periods. The customer's free trial period status is shown in Paigo dashboard with days remaining or expired dates in the past. The customer's free trial period can also be retried by API. See [Get Customer API](http://www.api.docs.paigo.tech/#tag/Customers/operation/Get%20a%20customer%20by%20ID).
+
+Free trial usage is defined at dimensions level. Customers can use up to a certain limit of product usage free of charge. A classic example of free trial usage is AWS Lambda function: the first 1M Lambda runs are free every month. Free trial usage is implemented in Paigo using dimension entitlement. To define free trial usage, follow the steps below:
+
+1. 1.  
+Turn on the **Usage Entitlement** toggle of a dimension
+
+2. 2.  
+Enter the free trial usage amount in the **Entitlement Limit**, such as 1,000,000 API requests.
+
+3. 3.  
+Turn on **Allow Overage** toggle.
+
+4. 4.  
+Enter the price in the **Consumption Price**
+
+5. 5.  
+Specify other properties as appropriate. See [Define Product Metrics](/pricing-and-subscription/define-product-metrics) .
+
+Once dimensions are set up, the initial usage metered is free of charge for every billing cycle. Usage above the entitlement limit will be billed accordingly.
+
+Free trial credit is coming soon.
+
+### Defining Offering Best Practices
+
+**Define B2B sales deals as separate offerings**
+
+Each B2B sales deals may contain different software packages, pricing structure, or payment schedule. The best approach to charge customers the right price is to define dedicated offering for a particular customer, with the following benefits:
+
+* Customized identifier (offering name) for a particular customer, therefore it's easier to manage
+
+* Allow different pricing structures such as different payment schedule or discount terms
+
+* Update to offering won't affect other customers. The contract may be renewed or revised. Therefore, the offering maybe updated. Create dedicated offering for a customer will minimize the potential impact to other customers bill.
+
+**Leverage usage dimensions to fully customize offerings**
+
+Usage dimension is the key to the flexibility of Paigo offering system as usage dimension can be used to represent a product usage metric (such as consumed data), usage entitlement (such as limit 50GB storage), feature flag (such as Enterprise Support Plan, or SLA level 99.95%), or customer value metric (such as number of users). The beauty of offering is that it allows combinations of usage dimensions of different kinds. For example, a usage-based offering can consist of the following dimensions at the same time:
+
+* $0.0001 per 1,000 API call, as a product usage metric
+
+* $50 GB Data Storage Limit, as a usage entitlement
+
+* Developer Support Plan for $99/Month, as a feature flag
+
+Different ways of usage dimension combinations can be used to test software packing, or tailored for different segment customers such as SMB, free trials, etc. See [Define Product Metrics](/pricing-and-subscription/define-product-metrics) for more documentation and best practices on using dimensions.

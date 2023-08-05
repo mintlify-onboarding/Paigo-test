@@ -1,15 +1,15 @@
 {
   "$schema": "https://mintlify.com/schema.json",
-  "name": "Starter Kit",
+  "name": "Paigo Documentation",
   "logo": {
-    "dark": "/logo/dark.svg",
-    "light": "/logo/light.svg"
+    "dark": "/logo/dark.png",
+    "light": "/logo/light.png"
   },
   "favicon": "/favicon.png",
   "colors": {
-    "primary": "#9563FF",
-    "light": "#AE87FF",
-    "dark": "#0D001D",
+    "primary": "#3f76dd",
+    "light": "#3f76dd",
+    "dark": "#3f76dd",
     "background": {
       "dark": "#090014"
     },
@@ -21,17 +21,17 @@
   "topbarLinks": [
     {
       "name": "Support",
-      "url": "mailto:hi@mintlify.com"
+      "url": "team@paigo.tech"
     }
   ],
   "topbarCtaButton": {
-    "name": "Dashboard",
-    "url": "https://dashboard.mintlify.com"
+    "name": "Paigo Dashboard",
+    "url": "https://auth.paigo.tech/login?state=hKFo2SB4WVdKS1IyXzUtaDd5N1RGRkxRa05IWUJ4ZDU0YnJTc6FupWxvZ2luo3RpZNkgWkc1QlctUm9hVlpuVlVPNlZadHIzTmVKZGZHSHFIMWqjY2lk2SBSQTdMaDZOdElPdzhkVUMwRTlEWnBlcXdha0l5Z2ZoTA&client=RA7Lh6NtIOw8dUC0E9DZpeqwakIygfhL&protocol=oauth2&scope=openid&response_type=code&redirect_uri=https%3A%2F%2Fapi.prod.paigo.tech%2Fusers%2Fredirect&session=false&property=user"
   },
   "tabs": [
     {
       "name": "API Reference",
-      "url": "api-reference"
+      "url": "https://paigo-public-information.s3.us-east-2.amazonaws.com/public_api.html"
     }
   ],
   "anchors": [
@@ -48,35 +48,20 @@
     {
       "name": "Blog",
       "icon": "newspaper",
-      "url": "https://mintlify.com/blog"
+      "url": "https://paigo.substack.com/"
     }
   ],
   "navigation": [
     {
-      "group": "Get Started",
-      "pages": ["introduction", "quickstart", "development"]
+      "group": "Documentation Home",
+      "pages": ["documentation-home/overview", "documentation-home/quick links"]
     },
     {
-      "group": "Essentials",
-      "pages": ["essentials/markdown", "essentials/code", "essentials/images", "essentials/settings", "essentials/navigation"]
-    },
-    {
-      "group": "API Documentation",
-      "pages": ["api-reference/authentication"]
-    },
-    {
-      "group": "Endpoint Examples",
-      "pages": [
-        "api-reference/endpoint/get",
-        "api-reference/endpoint/create",
-        "api-reference/endpoint/update",
-        "api-reference/endpoint/delete"
-      ]
+      "group": "Overview",
+      "pages": ["overview/5-minute-product-overview", "overview/getting-started-with-paigo", "overview/key-concepts"]
     }
   ],
   "footerSocials": {
-    "twitter": "https://twitter.com/mintlify",
-    "github": "https://github.com/mintlify",
-    "linkedin": "https://www.linkedin.com/company/mintsearch"
+    "linkedin": "https://www.linkedin.com/company/paigo-tech"
   }
 }

@@ -1,0 +1,46 @@
+---
+title: "Usage Measurement Template"
+---
+
+**New Feature Announcement**
+
+Paigo has introduced native Azure Usage Measurement support! See detailed documentation from [Virtual Machine Compute Time on Azure (Measurement Template)](/measure-usage-and-collect-data/infrastructure-based-method#virtual-machine-compute-time-on-azure-measurement-template)and [Managed Disk on Azure (Measurement Template)](/measure-usage-and-collect-data/infrastructure-based-method#managed-disk-on-azure-measurement-template)
+
+### Overview
+
+Usage measurement templates are predefined sets of configurations of measurements and dimensions for commonly used SaaS product usage. For example, compute time is a commonly defined product metric by many infrastructure SaaS business. Paigo has several templates for compute time measurement and dimension configurations. See below table for the supported usage measurement templates.
+
+| Template Name                                                                                                                                                 | Status  | Platform   | Method         | Description                                                           |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- | ---------- | -------------- | --------------------------------------------------------------------- |
+| [Kubernetes Pod Compute Time](/measure-usage-and-collect-data/agent-based-method#kubernetes-pod-compute-time-measurement-template)                          | GA      | Kubernetes | Agent          | Measure pod running time in Kubernetes with minute-level precision    |
+| [EC2 Compute Time](/measure-usage-and-collect-data/infrastructure-based-method#ec2-instance-compute-time-measurement-template)                              | GA      | AWS        | Infrastructure | Measure EC2 instance running time with minute-level precision         |
+| [EC2 Egress](/measure-usage-and-collect-data/infrastructure-based-method#ec2-egress-measurement-template)                                                   | GA      | AWS        | Infrastructure | Measure network egress from EC2 instance with byte-level precision    |
+| [EBS Volume](/measure-usage-and-collect-data/infrastructure-based-method#ebs-volume-and-snapshot-measurement-template)                                      | GA      | AWS        | Infrastructure | Measure EBS volume size with gigabyte-level precision                 |
+| [EBS Snapshot](/measure-usage-and-collect-data/infrastructure-based-method#ebs-volume-and-snapshot-measurement-template)                                    | GA      | AWS        | Infrastructure | Measure EBS snapshot size with gigabyte-level precision               |
+| (NEW) [Virtual Machine Compute Time](/measure-usage-and-collect-data/infrastructure-based-method#virtual-machine-compute-time-on-azure-measurement-template) | Preview | Azure      | Infrastructure | Measure Azure VM running time with minute-level precision             |
+| (NEW) [Managed Disk](/measure-usage-and-collect-data/infrastructure-based-method#managed-disk-on-azure-measurement-template)                                 | Preview | Azure      | Infrastructure | Measure the size of Azure managed disk, with gigabyte-level precision |
+| (NEW) [Usage Data in S3](/measure-usage-and-collect-data/datastore-based-method#usage-data-in-s3-measurement-template)                                       | Preview | S3         | Datastore      | Collect usage based on data in S3 objects                             |
+
+### Measurement Properties and Predefined Values
+
+Following properties are measurement properties and their values predefined for the templates:
+
+* **Measurement Frequency** The frequency that Paigo measures the usage as the atomic usage data.
+
+* **Precision** The precision of atomic usage data Paigo measures.
+
+Once a measurement is used to populate usage data for a dimension, the dimension configuration is automatically decided based on the configuration of measurement. For example, if the measurement is measuring the compute time, then the dimension unit can only be time-based unit such as Hour. Any other value such as gigabyte will be rejected as invalid.
+
+The Following properties are dimension properties and their values predefined for the templates.
+
+* Unit
+
+* Aggregation Method
+
+* Aggregation Interval
+
+* Usage Increment
+
+* Rounding
+
+See [Pricing Plan and Sale Deals](/pricing-and-subscription/pricing-plan-and-sale-deals) for information on these properties.

@@ -1,0 +1,103 @@
+---
+title: "Process Payment with Stripe"
+---
+
+Paigo supports Stripe integration as the payment transaction processor. Paigo uses [Standard Stripe Connect](https://stripe.com/connect) to orchestrate the direct charge between software buyer and software seller.
+
+### Enable Stripe Integration
+
+Navigate to **Settings > App > Stripe Connect** in Paigo dashboard. Click **Enable** button. The browser will open in a new tab the onboarding site for Stripe authentication. See the screenshot below for an example.
+
+![](/images/invoice-and-process-payment/Cursor_and_Identity_Verification_by_Stripe.png)
+
+Fill in all the necessary business information, address, and payment so that Paigo will be able to process billing payments successfully. By authenticating and submitting all the required information, this Stripe account becomes a connected Standard Account on Standard Stripe Connect managed by Paigo. See more information from [Stripe Documentation](https://stripe.com/docs/connect/standard-accounts).
+
+Note that it's critical to provide all the necessary business or payment informtion to Stripe to ensure no disruption to revenue collection. Failure to provide sufficient information to Stripe may cause the Stripe account to be in not ready status so as to block the receiving of customer payment.
+
+If there are issues with Stripe Integration or Stripe Authentication failed for some reason, follow the step to [Disable Stripe Integration](/invoice-and-process-payment/process-payment-with-stripe#disable-stripe-integration) and re-enable as documented here.
+
+### Binding Customer Entity in Paigo with Customer Stripe Accounts
+
+Paigo requires SaaS customers' Stripe account information to issue payment request to. In order to correctly charge customers, the customer ID in the form of `cus_xxxxxxxxxxxxxx` is stored in the customer entity of Paigo as the binding with a particular customer Stripe Account which is responsible for making payment for bills incurred. During the creation of Paigo customer entity, there are two options to set the binding: use an existing Stripe customer IDs (`cus_xxxxxxxxxxxxxx`) or create new Stripe customer IDs.
+
+The customer data in Paigo and customer data in Stripe are not in sync automatically because they are used for different purpose. The customer data in Paigo is used for billing, invoicing and tax purposes. SaaS business is responsible for maintaining different records of customer data in Stripe if needed.
+
+To use either of the options to bind customer entities, you must first follow [these steps](https://stripe.com/docs/customer-management/activate-no-code-customer-portal) from Stripe Document to activate the no-code customer portal. Activating the customer portal inside Stripe dashboard [here](https://dashboard.stripe.com/test/settings/billing/portal). The branding and UI customization can also be done in the same place. 
+
+Note that it's important to prompt customers to provide correct payment methods such as credit card information when their Stripe Account is onboarded in the customer portal in order to avoid failed charges or other errors in subsequent billing flows.
+
+#### Option 1: Use Existing Stripe Customer IDs
+
+Existing Stripe customer IDs must pre-exist in SaaS business' Stripe account, and the customer ID `cus_xxxxxxxxxxxxxx` then be provided during the creation of customer entity in Paigo. Below information is a high-level overview of onboarding customer's Stripe account, which involved two steps.
+
+Step 1: Collect customer Stripe Account Information
+
+A customer profile must exist under the Stripe account of SaaS business in order for Paigo to orchestrate the payment. Following [these steps](https://stripe.com/docs/billing/customer) from Stripe Document to create a customer profile in Stripe.
+
+1. 1.  
+Verify that the customer doesn’t already exist.
+
+2. 2.  
+Click **Add Customer**, or press **N**, on the **Customers** page.
+
+3. 3.  
+At a minimum, enter your customer’s **Name** and **Account email**.
+
+4. 4.  
+Click **Add Customer** in the dialog.
+
+After the creation of a customer profile, it's recommended to use Stripe's no-code customer portal to ask customers to complete their profile information such as payment methods.
+
+Step 2: Enter customer information in Paigo
+
+Navigate to **Customer > New Customer** for the new customer creation form in Paigo dashboard. Pay special attention to the following fields:
+
+* **Payment Channel** Select `Stripe`
+
+* **Customer in Stripe** Select `Existing`
+
+* **Customer Stripe Account ID** Set the customer ID as assigned by Stripe when this customer profile was created. Customer ID should be in the form of `cus_xxxxxxxxxxxxxx`. Customer ID can be found the customer profile of Stripe. See below screenshot for an example.
+
+![](/images/invoice-and-process-payment/Cursor_and_Customers_%E2%80%93_paigo_tech_%E2%80%93_Stripe.png)
+
+#### Option 2: Create New Stripe Customer IDs
+
+If the creation of a new Stripe customer ID is selected, during customer entity creation, Paigo will automatically call Stripe API to create a new customer entity in Stripe on behalf of the SaaS business's Stripe account and store the new customer ID. Upon successful creation of customers in Paigo and Stripe, Paigo API will return a URL to a short-lived, pre-authenticated Stripe Hosted Page, which SaaS business can redirect SaaS customers to, in order for SaaS customers to fill in the right payment information and other relevant business data. See [API](/api) Doc for details on the returned data schema and URL. If a customer is created in Paigo dashboard manually, the portal URL will be copied to the clipboard automatically.
+
+This option is only available for creating new customers in Paigo. Updating existing customers must use [Option 1: Use Existing Stripe Customer IDs](/invoice-and-process-payment/process-payment-with-stripe#option-1-use-existing-stripe-customer-ids).
+
+### Issue Billing Payment
+
+Paigo uses Stripe Standard Connect to orchestrate the payment between SaaS business and SaaS customers. The payment will be issues as a Direct Charge on the SaaS customer's account. Below steps describe how Direct Charge works. See [Stripe Document](https://stripe.com/docs/connect/direct-charges) for more information about Direct Charge.
+
+* Paigo uses Stripe API to create a charge on SaaS customers Stripe account so the payment appears as a charge on the SaaS business Stripe account directly (not in Paigo's account balance).
+
+* SaaS business' account balance increases with every charge.
+
+* SaaS business' account balance will be debited for the cost of Stripe fees, refunds, and chargebacks.
+
+Paigo will issue a Direct Charge when an automatic or manual invoice is reviewed and approved. See [Stripe Doc](https://stripe.com/docs/declines) for more information on the potential reasons for payment issuing. When there is correct payment information collected from customer Stripe account, the payment will automatically be used.
+
+Paigo runs async process to monitor the payment transactions. If the payment is successful, Paigo will automatically update the invoice as paid.
+
+### Multi-Currency Support
+
+Paigo supports multiple currencies for payment settlement using Stripe. Paigo processes currencies based on SaaS customer's preference as defined in [Customer Preferred Currency](/pricing-and-subscription/manage-customer-profile#customer-preferred-currency). The balance received in SaaS business Stripe account is by default automatically converted to the settlement currency of the SaaS business account, such as US Dollar for US businesses. To view your payout setup in Stripe, go to payouts settings in Stripe Dashboard [here](https://dashboard.stripe.com/settings/payouts). SaaS business can opt to enable alternative currency payouts or opt out of automatic currency conversion. See [Stripe Docs](https://stripe.com/docs/payouts/alternative-currencies) for more details.
+
+### Failed Payment Handling
+
+In one or multiple of following scenarios, issued payment Direct Charge may fail.
+
+* Incorrect payment information on customer Stripe account
+
+* Incorrect customer Stripe account ID set in Paigo
+
+* Credit card declined the transaction
+
+Paigo runs async process to monitor the payment transactions. Errors or disruptions to payment processing will appear in your system inbox within 12 hours of the payment processes. Paigo will provide detailed failure information to SaaS business for further action on retrying or other processing methods.
+
+### Disable Stripe Integration
+
+Disabling Stripe Connect will remove Stripe account record from Paigo so that Paigo won't be able to process payment for your customers. Additional actions may need to be performed to deauthorize your Stripe Account from Stripe Connect. Contact [team@paigo.tech](mailto:team@paigo.tech) for support.
+
+Navigate to **Settings > App > Stripe Connect** in Paigo dashboard. Click **Disable** button. Finally click the OKbutton to confirm disabling Stripe Integration. Once disabled, the **Stripe Connect Reference ID** will be cleared in the text field of Stripe Connect integration.

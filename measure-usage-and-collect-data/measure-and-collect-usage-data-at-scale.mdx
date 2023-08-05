@@ -1,0 +1,91 @@
+---
+title: "Measure and Collect Usage Data at Scale"
+---
+
+### Overview
+
+The most critical and fundamental steps to get started with usage-based billing and pricing are to measure accurate usage data and collect them for billing/pricing. The [5 Minute Product Overview](/overview/5-minute-product-overview) describes the flow diagram of usage-based billing. Paigo features automatic usage measurement and collection. The idea behind this unique technology is that Paigo does deep integration with SaaS application to extract usage out in real-time and keep track of the usage amount for the SaaS business.
+
+On some other platforms, the terminology **usage metering** is used. Usage metering does not include the measurement or collection of usage data. Instead, it requires some home-built system to measure usage data (such as network egress is used 256 Bytes) in real-time, then send the measured data over the wire on a frequent cadence for those platforms to do metering. To avoid the confusion, Paigo does not use the terminology of usage metering, but Usage Measurement and Collection instead.
+
+Paigo's **Usage Measurement and Collection Engine** is summarized with the table below.
+
+| Method                   | Integration Point                               |
+| ------------------------ | ----------------------------------------------- |
+| **Infrastructure-based** | Raw Cloud Infrastructure: (AWS, Azure, GCP)     |
+| **Agent-based**          | Hosting Platform: (Kubernetes, Container, VM)   |
+| **Datastore-based**      | Data Store: (Queue, Log File, Blob Storage, S3) |
+| **SQL-based**            | SQL Compatible Database: (Postgres, MySQL)      |
+| **API-based**            | SaaS Application: (API, SDK)                    |
+
+### Measuring Usage and Remaining Stateless
+
+Every SaaS application needs to calculate the usage of some product metrics. For example, an API platform calculates the total API calls made by a customer. The number of API calls made is a counter, which only increases over time with the usage and can accumulate up to billions for high volume usage. Another example would be data platform calculates the total data stored by a customer. The size of data stored is a gauge, which may arbitrary go up or down. In both examples, keeping track of the total API calls or total data stored requires maintaining some state such as "running total". With Paigo's **Usage Measurement and Collection** engine, it's not needed to maintain such as state for billing purpose. With deep integration, Paigo will be subscribed to usage event in real time and keep track of total, or any kind of aggregation, in order to calculate the bill. For product metrics or usage data of high volume (such as up to millions or billions), concurrent, high throughput or dynamic, Paigo eliminates the need to maintain internal state for billing calculation. All of the measured usage will be made available in real-time by API or dashboard.
+
+### Pull vs Push: Deep Integration Makes a Difference
+
+To collect the measured usage data record, Paigo leverages deep integration to ship data over the network automatically. This PUSHING pattern effectively eliminates the need to:
+
+* Develop algorithms to slide & dice tenant usage
+
+* Maintain infra to send usage data
+
+* Guaranteed delivery and data durability
+
+* Error handling + retry logic
+
+* Invest engineer/time on non-core products
+
+### Usage Measurement in Multi-tenant Environment
+
+Paigo can measure and collect usage in a multi-tenant deployment of SaaS application. Metadata is used in multi-tenant environments for Paigo to do usage attribution. For multi-tenant environment, Paigo first measures the combined usage of all tenants, then use metadata to attribute usage to each tenant. Paigo supports tags as metadata for usage measurement. All resources that SaaS customers use must be tagged with the unique identifiers. See each individual measurement method for more details.
+
+### Definition of Integration Methods
+
+Infrastructure-based integration works by Paigo Infrastructure Connector talks to raw infrastructure resource API, such as block storage, running VM clusters or network layer, to measure usage data. It is great for product metrics that are defined by lower level resources such as compute, storage, network, log files, object uploaded, etc.
+
+Agent-based integration works by Paigo receives usage data sent from Prometheus agent. The agent collects data from various sources that are compatible with Prometheus Exporter protocol, such as Prometheus official exporters, Community-supported exporters, 3rd-party exporters or any custom exporters. Paigo applies server-side transformation to clean, join, filter or transform the raw data sent from Prometheus to maintain the usage record for billing and pricing purpose. It is great for both product metrics that are defined by lower level resource and abstract application metrics, such as API call, emails sent, etc.
+
+Datastore-based integration works by Paigo Datastore Connector talks to one of the supported datastore, such as event queue, blob storage, log file, etc. to measure usage data. It is great for both product metrics that are defined by lower level resource and abstract application metrics.
+
+SQL-based integration works similarly to datastore-based integration, but specifically with SQL protocol supported data platforms.
+
+API-based integration works by embedding Paigo REST API in SaaS application. And calling Paigo API on the fly when usage event happens. It is great for any application metrics.
+
+### Considerations for Choosing between Integration Methods
+
+First of all, all of these integration methods are not mutually exclusively. More than one measurement and collection methods can be used at the same time to collect same or different product metrics. For example, a Data Platform may enable Infrastructure-based method to have Paigo collect the compute time elapsed in process data from underlying GPU resources, and datastore-based method to have Paigo parse the objects in S3 in order to understand the size of the data processed.
+
+The key difference among these different integration methods are generally:
+
+1. 1.  
+**The existing architecture of the SaaS application.** The goal of Paigo **Usage Measurement and Collection** is to alleviate the burden of spinning up and maintain additional infrastructure for keeping the state of usage and collect the usage data. Therefore, the best integration solution would be making no change to the existing SaaS application within its business context. For example, if the SaaS application already has an event-driven architecture with a central event bus in the backend, the datastore-based integration can subscribe to the event bus for real-time usage event emitted. If the SaaS application is already leveraging Prometheus agent to collect product metrics, the agent-based integration can collect usage data as-is.
+
+2. 2.  
+**Trade-offs to make.** In the table defined at the beginning of this page, all methods are ranked in the order of:  
+   1. 1.  
+   _Shorter Time-to-Market -> Longer Time-to-Market._ For example, infrastructure-based measurement could take less than 2 minutes to setup and get running, while API-based measurement could take much more time to develop, integrate and test.  
+   2. 2.  
+   _Lower Maintenance -> Higher Maintenance._ For example, there is barely anything for SaaS business to maintain with Infrastructure-based measurement, while API-based measurement requires SaaS business to maintain codebase.  
+   3. 3.  
+   _Less Control -> More Control._ For example, with infrastructure-based measurement, there is less room to configure and less ways to customize. While with API-based measurement, everything is completely customizable.
+
+Talk to Paigo Solutions Architect team for advice on best integration approach.
+
+### Ingest Usage Record with Dashboard
+
+From Paigo Dashboard, usage data can be recorded without writing code. It is great for trying usage data ingestion and getting started with more programmatic way of usage data collection automation. To try creating usage record with dashboard, it is required to have a dimension and a customer profile created. See [Getting Started with Paigo](/overview/getting-started-with-paigo) chapter for an example setup.
+
+To ingest usage record, navigate to **Customer** tab and select a customer profile from the customer table. In the customer profile view, scroll down to **Usage Monitoring** widget. In the dropdown on the top right corner of the widget, select the dimension to record usage with, and click on the **Record Usage** button. In the **Record Usage** form, the fields of **Customer ID**, and **Dimension ID**, are all prefilled. Set value for the following fields with proper values:
+
+* **Record Value**: a numerical value represent the amount of usage
+
+* **Timestamp**: the time of when the usage record is measured. Usually it marks the end of the period when usage amount occurs.
+
+* **Record Metadata (Key - Value Pair)**: additional metadata to be stored on the usage record, such as environment, purpose, owner, developer, contract number, or any arbitrary data to be associated with this usage record. Metadata can be used for analytics purpose in the future. Click on **Add Metadata** to add the key-value pair to metadata. Double click previewed Metadata table cells to edit added metadata, and press **Enter** to save the edits.
+
+See the screenshot below for an example.
+
+![](/images/measure-usage-and-collect-data/Cursor_and_Paigo_Dashboard___Retool.png)
+
+In the **Preview Record Code Snippet** section down below, the code to create the same usage record is provided. Click on the **Copy** button on the top right corner of **Preview Record Code Snippet** to copy the code. Click **Submit** button to submit the usage record.
