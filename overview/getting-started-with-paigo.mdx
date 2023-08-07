@@ -1,18 +1,21 @@
 ---
-title: "Getting Started with Paigo"
+title: Getting Started with Paigo
+description: "This chapter describes a hands-on guide for getting started with Paigo platform. The chapter will guide through a typical case of SaaS billing setup and get ready to bill customers with usage-based pricing strategy. Guidance on further exploring additional features are also provided at the end of the chapter."
 ---
-
-This chapter describes a hands-on guide for getting started with Paigo platform. The chapter will guide through a typical case of SaaS billing setup and get ready to bill customers with usage-based pricing strategy. Guidance on further exploring additional features are also provided at the end of the chapter.
 
 ## Overview
 
 There are three major steps to get started with Paigo.
 
-* Billing Setup
+<CardGroup cols={2}>
+  <Card title="Billing Setup" icon="square-1" color="#3f76dd">
+  </Card>
+  <Card title="Report usage data" icon="square-2" color="#3f76dd">
+  </Card>
+</CardGroup>
 
-* Report usage data
-
-* Use the data
+<Card title="Use the data" icon="square-3" color="#3f76dd">
+</Card>
 
 First, create an account with Paigo by [connecting with sales team](mailto:team@paigo.tech), or [sign up for Free Trial Plan](https://paigo.tech/free-trial). With account credentials, navigate to [Paigo dashboard](https://auth.paigo.tech/login?state=hKFo2SB4WVdKS1IyXzUtaDd5N1RGRkxRa05IWUJ4ZDU0YnJTc6FupWxvZ2luo3RpZNkgWkc1QlctUm9hVlpuVlVPNlZadHIzTmVKZGZHSHFIMWqjY2lk2SBSQTdMaDZOdElPdzhkVUMwRTlEWnBlcXdha0l5Z2ZoTA&client=RA7Lh6NtIOw8dUC0E9DZpeqwakIygfhL&protocol=oauth2&scope=openid&response_type=code&redirect_uri=https%3A%2F%2Fapi.prod.paigo.tech%2Fusers%2Fredirect&session=false&property=user) and login.
 
@@ -203,7 +206,7 @@ Once the usage data gets measured and collected to Paigo backend, they can be vi
 
 Next, we are going to explore the usage data collected in aggregated form and raw form. In the same customer profile view, navigate to **Usage Data** widget on the page. By default, the raw usage data collected in the current month will be shown in the usage data table. See below screenshot for an example.
 
-![images](/image/usage_data_image.png)
+![images](/images/usage_data_image.png)
 
 Alternatively, set **Aggregation** as `Daily` and click **View**. Now all of the usage data are grouped by day, and all data points in the same day are added together to calculate the sum, because in the dimension configuration, we have set the **Aggregation Method** as sum. See screenshot below for an example.
 
@@ -225,4 +228,4 @@ To explore Paigo's different ways of measuring and collecting usage of SaaS appl
 
 To explore more ways of modeling pricing strategies in Paigo, read [Pricing Plan and Sale Deals]() chapter for full documentation.
 
-To understand the key concepts in Paigo and how they work together, read [Key Concepts]() page for more details.
+To understand the key concepts in Paigo and how they work together, read [Key Concepts](/overview/key-concepts) page for more details.
