@@ -1,3 +1,25 @@
 ---
 title: "Key Concepts"
 ---
+
+This chapter introduces the most important concepts in Paigo and uses examples to help understand how those concepts can be used for real-world cases.
+
+## Terminology
+
+**Offering**: Offering represents a pricing plan of the product, or how the product is charged. *As an example, an offering called "Enterprise Plan" is priced $49 per month for subscribed SaaS customers.*
+
+**Dimension**: Dimension represents a valuable product metric that SaaS customers can consume and be charged on. *As an example, a dimension for an API SaaS would be API requests and a dimension for a machine learning platform would be the minutes of GPU used.*
+
+**Customer**: Customer represents a SaaS customer of the SaaS business who uses products and make payments for their usage.
+
+**Measurement**: measurement represents the implementation of how dimension usage is measured, collected and tracked. *As an example, a dimension called Processing Time (Minutes) for a machine learning SaaS application needs a measurement to define how Paigo calculates the running time in the SaaS infrastructure (such as GPU running in a Kubernetes Pod) and the frequency for Paigo to sample the running time (such as every 30 seconds).*
+
+## Use database SaaS as an example
+
+A database SaaS business manages an offering called "Developer Plan" that charges $0.5/hour for compute time and $0.08/GB for data stored. A customer called John Doe subscribes to this plan. These relationship is illustrated in the diagram below.
+
+![image](/images/saas_ex1.png)
+
+Each of the dimension in the above diagram may have a measurement assigned so that the usage can be measured, collected and tracked. The full picture is illustrated in the diagram below.
+
+![image](/images/saas_ex2.png)
