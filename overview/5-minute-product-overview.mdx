@@ -18,14 +18,14 @@ description: "This document provides a high-level overview of Paigo platform's f
 
 Paigo provides a powerful pricing engine with great flexibility. SaaS business of any scale can manage winning business pricing strategies easily in Paigo. Below are some examples of the pricing strategies Paigo can support:
 
-  <Card title="Various pricing structure" icon="list-tree" color="#3f76dd">
+<Card title="Various pricing structure" icon="list-tree" icontype="duotone">
   pay-as-you-go, subscription tier, flat rate, or hybrid.
-  </Card>
-  <Card title="Pricing add-on" icon="plus" color="#3f76dd">
+</Card>
+<Card title="Pricing add-on" icon="plus" icontype="duotone">
   usage entitlement, overage charge, free trial, discount
-  </Card>
-<Card title="B2B sales deal" icon="comments-dollar" color="#3f76dd">
-private contract, commitment, prepaid credit
+</Card>
+<Card title="B2B sales deal" icon="comments-dollar" icontype="duotone">
+  private contract, commitment, prepaid credit
 </Card>
 
 Pricing plans are often called SKUs, product lines, offerings, or packages. Paigo's pricing module empowers SaaS business to create and mange as many pricing plans as needed in no-code way. The pricing strategy can be defined, analyzed and improved in Paigo dashboard efficiently.
@@ -37,18 +37,21 @@ Navigate to [Pricing Plan and Sale Deals](/pricing-and-subscription/pricing-plan
 ![image](/images/usage-based-billing.png)
 
 Paigo provides billing infrastructure for usage-based business mode. The billing infrastructure achieves 100% billing automation through the following steps:
-
-Usage Measurementand CollectionBillingAggregationInvoicingand TaxCloud Marketplace ReportingPaymentProcessing
-
-* **Measure customer usage** Paigo's unique usage measurement engine deeply integrates with SaaS application architecture to calculate precise usage in real-time. The usage measurement engine supports infrastructure-based, agent-based, datastore-based, SQL-based and API-based usage measurement. See [Measure and Collect Usage Data at Scale](/measure-usage-and-collect-data/measure-and-collect-usage-data-at-scale) chapter for more information.
-
-* **Collect usage data** Delivery the measurement the usage data to backend billing system with client-side transformation, high-availability and reliability. Usage data collection in Paigo is also done by usage measurement engine.
-
-* **Persist billing data** Once the usage data is delivered at the backend, Paigo applies algorithms to process data to ensure it's uniqueness, and persist the data point in database as time-series append-only usage journal with proper indexing for billing and analytics use cases.
-
-* **Aggregate usage** Run batch processes to aggregate raw data layer into different aggregated layer, such as hourly sum, daily maximum, or monthly average. Also group data by common use cases such as product lines, customers, or pricing plans.
-
-* **Invoice and payment** At the end of billing cycle, scheduled processes run to calculate all the service usage by each customer and the total amount owed. Tax-compliant invoice is generated for review. Payment requests are issued upon the approval of the invoice. Paigo also takes care of failed payment and revenue recovery. See [Process Payment with Stripe](/invoice-and-process-payment/process-payment-with-stripe) chapter for more information.
+<Card title="Measure customer usage" icon="slider" icontype="duotone">
+  Paigo's unique usage measurement engine deeply integrates with SaaS application architecture to calculate precise usage in real-time. The usage measurement engine supports infrastructure-based, agent-based, datastore-based, SQL-based and API-based usage measurement. See [Measure and Collect Usage Data at Scale](/measure-usage-and-collect-data/measure-and-collect-usage-data-at-scale) chapter for more information.
+</Card>
+<Card title="Collect usage data" icon="server" icontype="duotone">
+  Delivery the measurement the usage data to backend billing system with client-side transformation, high-availability and reliability. Usage data collection in Paigo is also done by usage measurement engine.
+</Card>
+<Card title="Persist billing data" icon="server" icontype="duotone">
+  Once the usage data is delivered at the backend, Paigo applies algorithms to process data to ensure it's uniqueness, and persist the data point in database as time-series append-only usage journal with proper indexing for billing and analytics use cases.
+</Card>
+<Card title="Aggregate usage" icon="plus" icontype="duotone">
+  Run batch processes to aggregate raw data layer into different aggregated layer, such as hourly sum, daily maximum, or monthly average. Also group data by common use cases such as product lines, customers, or pricing plans.
+</Card>
+<Card title="Invoice and payment" icon="file-invoice-dollar" icontype="duotone">
+  At the end of billing cycle, scheduled processes run to calculate all the service usage by each customer and the total amount owed. Tax-compliant invoice is generated for review. Payment requests are issued upon the approval of the invoice. Paigo also takes care of failed payment and revenue recovery. See [Process Payment with Stripe](/invoice-and-process-payment/process-payment-with-stripe) chapter for more information.
+</Card>
 
 Every step in sequence is fully automated by Paigo without engineering effort or internal system by SaaS business. To learn more about the end-end experience of using Paigo Billing, read the below documents.
 
@@ -56,18 +59,18 @@ Every step in sequence is fully automated by Paigo without engineering effort or
 
 Since usage-based model heavily rely on unit economy, cost benchmark becomes extremely important for SaaS business. Paigo platform provides the following usage-based cost insights out-of-box:
 <CardGroup cols={2}>
-  <Card title="Total cost" icon="calculator" color="#3f76dd">
+  <Card title="Total cost" icon="calculator" icontype="duotone">
   </Card>
-  <Card title="Variable cost as designated by usage dimensions" icon="wave-sine" color="#3f76dd">
+  <Card title="Variable cost as designated by usage dimensions" icon="wave-sine" icontype="duotone">
   </Card>
-  <Card title="Fixed cost" icon="lock" color="#3f76dd">
+  <Card title="Fixed cost" icon="lock" icontype="duotone">
   </Card>
-  <Card title="Cost breakdown" icon="file" color="#3f76dd">
+  <Card title="Cost breakdown" icon="file" icontype="duotone">
+  </Card>
+  <Card title="Unit cost" icon="cube" icontype="duotone">
   </Card>
 </CardGroup>
 
-<Card title="Unit cost" icon="cube" color="#3f76dd">
-</Card>
 
 Navigate to [Product Unit Cost](/business-analytics/product-unit-cost) chapter for full documentation.
 
