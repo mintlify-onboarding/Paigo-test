@@ -7,9 +7,9 @@
   },
   "favicon": "/favicon.png",
   "colors": {
-    "primary": "#3f76dd",
-    "light": "#3f76dd",
-    "dark": "#3f76dd",
+    "primary": "#015FFF",
+    "light": "#176CFD",
+    "dark": "#015FFF",
     "background": {
       "dark": "#090014"
     }
@@ -24,12 +24,18 @@
     "name": "Paigo Dashboard",
     "url": "https://auth.paigo.tech/login?state=hKFo2SB4WVdKS1IyXzUtaDd5N1RGRkxRa05IWUJ4ZDU0YnJTc6FupWxvZ2luo3RpZNkgWkc1QlctUm9hVlpuVlVPNlZadHIzTmVKZGZHSHFIMWqjY2lk2SBSQTdMaDZOdElPdzhkVUMwRTlEWnBlcXdha0l5Z2ZoTA&client=RA7Lh6NtIOw8dUC0E9DZpeqwakIygfhL&protocol=oauth2&scope=openid&response_type=code&redirect_uri=https%3A%2F%2Fapi.prod.paigo.tech%2Fusers%2Fredirect&session=false&property=user"
   },
-  "tabs": [
+  "anchors": [
     {
-      "name": "Blog",
-      "url": "https://paigo.substack.com/"
-    }
-  ],
+        "name": "Blog",
+        "icon": "newspaper",
+        "url": "https://paigo.substack.com/"
+    },
+    {
+      "name": "Contact Us",
+      "icon": "user-headset",
+      "url": "https://paigo.tech/meeting"
+  }
+],
   "navigation": [
     {
       "group": "Welcome",
